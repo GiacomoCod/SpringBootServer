@@ -80,13 +80,16 @@ public class DataController {
         return new ResponseEntity<>(movies, HttpStatus.OK);
     }
     // Endpoint per ottenere informazioni su un film dato il nome
-    @GetMapping("/movie/{name}") // Usa un path variable
-    public ResponseEntity<Movie> getMovieByName(@PathVariable("name") String name) {
+    @GetMapping("/movie/{name}")
+    public ResponseEntity<List<Movie>> getMovieByName(@PathVariable("name") String name) { // Restituisci una lista
 
-        Optional<Movie> movie = movieService.findMovieByName(name);
+        List<Movie> movies = movieService.findMovieByName(name);
 
-        return movie.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        if (!movies.isEmpty()) {  // Controlla se la lista è vuota
+            return new ResponseEntity<>(movies, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 se la lista è vuota
+        }
     }
 
     //Endpoint per salvare un nuovo film

@@ -22,12 +22,14 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
-    public Optional<Movie> findMovieByName(String name) {
-        logger.info("Cerco film con nome: {}", name); // Log
-        Optional<Movie> movie = movieRepository.findByName(name);
-        logger.info("Film trovato: {}", movie);
-        return movie;
+
+    public List<Movie> findMovieByName(String name) { // Cambia il tipo di ritorno
+        logger.info("Cerco film con nome: {}", name);
+        List<Movie> movies = movieRepository.findByName(name); // Usa la variabile movies
+        logger.info("Film trovati: {}", movies); // Logga la lista
+        return movies;
     }
+
     // Aggiungi un metodo per salvare un nuovo film (se necessario)
     public Movie saveMovie(Movie movie){
         return movieRepository.save(movie);

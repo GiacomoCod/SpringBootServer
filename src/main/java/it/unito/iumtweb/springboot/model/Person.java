@@ -14,7 +14,7 @@ public class Person {
     private int eta;      // Usa 'int' se l'età è sempre un intero
     private String citta;
 
-    // Getter e Setter (FONDAMENTALI)
+    // Getter e Setter
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 

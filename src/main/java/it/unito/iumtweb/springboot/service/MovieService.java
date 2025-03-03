@@ -2,13 +2,16 @@ package it.unito.iumtweb.springboot.service;
 
 import it.unito.iumtweb.springboot.model.Movie;
 import it.unito.iumtweb.springboot.model.Poster;
+import it.unito.iumtweb.springboot.model.Review;
 import it.unito.iumtweb.springboot.repository.MovieRepository;
 import it.unito.iumtweb.springboot.repository.PosterRepository;
+import it.unito.iumtweb.springboot.repository.ReviewRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +24,8 @@ public class MovieService {
     private MovieRepository movieRepository;
     @Autowired
     private PosterRepository posterRepository;
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     public List<Movie> getAllMovies(){
         return movieRepository.findAll();
@@ -60,6 +65,18 @@ public class MovieService {
             throw e; // Rilancia l'eccezione
         }
 
+    }
+
+    public List<Review> findReviewsByMovieTitle(String movieTitle) {
+        logger.info("Cerco recensioni per il film: {}", movieTitle);
+        try {
+            List<Review> reviews = reviewRepository.findByMovieTitle(movieTitle);
+            logger.info("Recensioni trovate: {}", reviews);
+            return reviews;
+        } catch (Exception e) {
+            logger.error("Errore durante la ricerca delle recensioni per il film: {}", movieTitle, e);
+            return Collections.emptyList(); // Restituisci una lista vuota in caso di errore
+        }
     }
 
 }

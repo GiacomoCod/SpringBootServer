@@ -4,6 +4,7 @@ package it.unito.iumtweb.springboot.controller;
 import it.unito.iumtweb.springboot.model.DataRequest;
 import it.unito.iumtweb.springboot.model.Movie;
 import it.unito.iumtweb.springboot.model.Person;
+import it.unito.iumtweb.springboot.model.Review;
 import it.unito.iumtweb.springboot.service.MovieService;
 import it.unito.iumtweb.springboot.service.PersonService;
 import org.slf4j.Logger;
@@ -105,6 +106,18 @@ public class DataController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    // Endpoint per ottenere le recensioni di un film (dato l'ID del film)
+    @GetMapping("/movie/{id}/reviews")
+    public ResponseEntity<List<Review>> getReviewsForMovie(@PathVariable("id") String movieId) {
 
+        Optional<Movie> movieOptional = movieService.findMovieById(movieId); //Uso l'id di mongo
+        if (movieOptional.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 se il film non esiste
+        }
+        Movie movie = movieOptional.get();
+
+        List<Review> reviews = movieService.findReviewsByMovieTitle(movie.getName());
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
+    }
 
 }

@@ -5,11 +5,11 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public interface MovieRepository extends MongoRepository<Movie, String> {
-    // Puoi aggiungere metodi di query personalizzati qui, se necessario
+public interface MovieRepository extends MongoRepository<Movie, String> { // String è il tipo dell'_id
 
-    List<Movie> findByName(String name); // Restituisce una List<Movie>
+    List<Movie> findByName(String name); // Per la ricerca per nome
+
+    // findById(String id) è già fornito da MongoRepository (per cercare per _id)
 }

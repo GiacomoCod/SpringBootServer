@@ -10,6 +10,10 @@ public class Movie {
     @Id
     private String id;  // Usa String per l'_id generato da MongoDB, anche se nel tuo esempio è int
 
+
+    @Field("id")
+    private int movieId;
+
     private String name;
 
     // Usa java.time.LocalDate o java.time.Year, a seconda della precisione che ti serve
@@ -24,6 +28,8 @@ public class Movie {
 
     // Usa Double se hai bisogno di maggiore precisione (es. 7.5)
     private float rating;
+
+    private String poster; //URL della locandina
 
     // Costruttore vuoto (necessario per Spring Data MongoDB)
     public Movie() {}
@@ -42,6 +48,14 @@ public class Movie {
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
+    public int getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
+    }
+
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
@@ -59,7 +73,8 @@ public class Movie {
 
     public float getRating() { return rating; }
     public void setRating(float rating) { this.rating = rating; }
-
+    public String getPoster() { return poster; }
+    public void setPoster(String poster) { this.poster = poster; }
     //toString
 
     @Override

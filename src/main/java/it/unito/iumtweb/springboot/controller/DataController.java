@@ -73,12 +73,6 @@ public class DataController {
     }
 
 
-    // Endpoint per ottenere tutti i film
-    @GetMapping("/movies")
-    public ResponseEntity<List<Movie>> getAllMovies() {
-        List<Movie> movies = movieService.getAllMovies();
-        return new ResponseEntity<>(movies, HttpStatus.OK);
-    }
     // Endpoint per ottenere informazioni su un film dato il nome
     @GetMapping("/movie/{name}")
     public ResponseEntity<List<Movie>> getMovieByName(@PathVariable("name") String name) { // Restituisci una lista
@@ -103,6 +97,14 @@ public class DataController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // 500 Internal Server Error
         }
     }
+
+    @GetMapping("/movie/byId/{id}")
+    public ResponseEntity<Movie> getMovieById(@PathVariable String id) {
+        Optional<Movie> movie = movieService.findMovieById(id); // Usa un metodo findMovieById nel service
+        return movie.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
 
 
 }
